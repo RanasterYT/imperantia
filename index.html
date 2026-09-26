@@ -3,674 +3,119 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <title>World of Nations</title>
+    <meta name="description" content="Imperantia — servidor de Minecraft Bedrock de guerra, política y creatividad en el mundo New World. Construye, alíate y conquista." />
+    <meta name="theme-color" content="#0b0a08" />
+    <title>Imperantia · Minecraft Bedrock — Construye, Alíate, Conquista</title>
+    <link rel="icon" href="title.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600&display=swap" rel="stylesheet" />
-    <style>
-        /* ===== RESET & BASE ===== */
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        html {
-            scroll-behavior: smooth;
-        }
-        body {
-            font-family: 'Inter', 'Segoe UI', sans-serif;
-            background: #0a0908;
-            color: #d4cdc0;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* ===== FONDO CON TEXTURA DE MAPA ANTIGUO ===== */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background:
-                radial-gradient(circle at 30% 40%, rgba(100, 70, 40, 0.15) 0%, transparent 60%),
-                radial-gradient(circle at 70% 80%, rgba(40, 30, 20, 0.4) 0%, transparent 50%),
-                linear-gradient(145deg, #0a0908 0%, #1a1614 100%);
-            z-index: -2;
-        }
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a03d' fill-opacity='0.04'%3E%3Cpath d='M50 10v-4h-4v4h-4v4h4v4h4v-4h4v-4h-4zM10 50v-4H6v4H2v4h4v4h4v-4h4v-4h-4zM50 50v-4h-4v4h-4v4h4v4h4v-4h4v-4h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* ===== ANIMACIONES ===== */
-        @keyframes fadeUp {
-            0% {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes float {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        @keyframes glowPulse {
-            0% {
-                filter: drop-shadow(0 0 6px rgba(200, 160, 80, 0.2));
-            }
-            50% {
-                filter: drop-shadow(0 0 25px rgba(200, 160, 80, 0.5));
-            }
-            100% {
-                filter: drop-shadow(0 0 6px rgba(200, 160, 80, 0.2));
-            }
-        }
-
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .animate-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ===== CONTENEDOR ===== */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem 3rem;
-        }
-
-        /* ===== HERO ===== */
-        .hero {
-            text-align: center;
-            padding: 3rem 1rem 2rem;
-            position: relative;
-            border-bottom: 1px solid rgba(200, 160, 80, 0.15);
-        }
-        .hero-badge {
-            display: inline-block;
-            background: rgba(200, 160, 80, 0.08);
-            border: 1px solid rgba(200, 160, 80, 0.25);
-            border-radius: 60px;
-            padding: 0.4rem 1.6rem;
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #c9a03d;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(4px);
-            font-family: 'Cinzel', serif;
-        }
-        .hero-logo {
-            max-width: 80%;
-            height: auto;
-            display: inline-block;
-            animation: float 6s ease-in-out infinite, glowPulse 4s ease-in-out infinite;
-            filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.7));
-            transition: transform 0.4s;
-            margin-bottom: 1.5rem;
-        }
-        .hero-logo:hover {
-            transform: scale(1.02);
-        }
-        .hero-title {
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
-            line-height: 1.1;
-            background: linear-gradient(135deg, #f5e8c8, #c9a03d, #dbb86a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 40px rgba(200, 160, 80, 0.15);
-        }
-        .hero-sub {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(0.9rem, 2vw, 1.2rem);
-            font-weight: 400;
-            color: #a89f8e;
-            letter-spacing: 3px;
-            margin-bottom: 1rem;
-        }
-        .hero-sub strong {
-            color: #dbb86a;
-            font-weight: 600;
-        }
-        .hero-desc {
-            max-width: 700px;
-            margin: 1rem auto 2rem;
-            font-size: 1.05rem;
-            color: #b8af9e;
-            font-weight: 300;
-        }
-        .hero-desc strong {
-            color: #dbb86a;
-            font-weight: 600;
-        }
-
-        /* ===== BOTONES ===== */
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            background: linear-gradient(135deg, #c9a03d, #a87d2e);
-            border: none;
-            padding: 1rem 2.8rem;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1.15rem;
-            font-family: 'Cinzel', serif;
-            color: #0b0b0e;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 8px 28px rgba(200, 160, 80, 0.2);
-            text-decoration: none;
-            letter-spacing: 1px;
-        }
-        .btn-primary:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 14px 40px rgba(200, 160, 80, 0.35);
-            background: linear-gradient(135deg, #dbb86a, #b58d34);
-        }
-        .btn-primary:active {
-            transform: scale(0.97);
-        }
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(200, 160, 80, 0.2);
-            padding: 0.9rem 2rem;
-            border-radius: 60px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            font-family: 'Cinzel', serif;
-            color: #c9a03d;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            backdrop-filter: blur(4px);
-            letter-spacing: 0.5px;
-        }
-        .btn-secondary:hover {
-            background: rgba(200, 160, 80, 0.1);
-            border-color: #c9a03d;
-            transform: translateY(-2px);
-        }
-
-        .hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1.8rem;
-        }
-
-        /* ===== MAPA DESTACADO ===== */
-        .map-showcase {
-            margin: 3rem auto;
-            border-radius: 32px;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(200, 160, 80, 0.12);
-            transition: all 0.5s;
-            max-width: 1000px;
-            position: relative;
-        }
-        .map-showcase::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(0deg, rgba(10, 9, 8, 0.4) 0%, transparent 40%);
-            pointer-events: none;
-        }
-        .map-showcase:hover {
-            transform: scale(1.003);
-            border-color: rgba(200, 160, 80, 0.3);
-        }
-        .map-showcase img {
-            display: block;
-            width: 100%;
-            height: auto;
-            transition: transform 0.6s;
-        }
-        .map-showcase:hover img {
-            transform: scale(1.02);
-        }
-
-        /* ===== SECCIÓN CARACTERÍSTICAS ===== */
-        .section-title {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
-            font-weight: 700;
-            text-align: center;
-            margin: 3rem 0 1rem;
-            color: #f0e6d0;
-            letter-spacing: 2px;
-        }
-        .section-title span {
-            color: #c9a03d;
-        }
-        .section-sub {
-            text-align: center;
-            color: #8a8272;
-            max-width: 600px;
-            margin: 0 auto 2.5rem;
-            font-weight: 300;
-            font-size: 0.95rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.8rem;
-            margin: 2rem 0 3rem;
-        }
-        .feature-card {
-            background: rgba(18, 16, 14, 0.8);
-            backdrop-filter: blur(8px);
-            border-radius: 24px;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            border: 1px solid rgba(200, 160, 80, 0.08);
-            transition: all 0.4s;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-        .feature-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(200, 160, 80, 0.25);
-            background: rgba(24, 20, 18, 0.9);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        }
-        .feature-icon {
-            font-size: 2.8rem;
-            margin-bottom: 1rem;
-            display: block;
-            filter: drop-shadow(0 0 10px rgba(200, 160, 80, 0.15));
-        }
-        .feature-card h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #dbb86a;
-            margin-bottom: 0.5rem;
-            letter-spacing: 1px;
-        }
-        .feature-card p {
-            color: #b0a692;
-            font-size: 0.9rem;
-            font-weight: 300;
-        }
-
-        /* ===== PANEL DEL SERVIDOR ===== */
-        .server-panel {
-            background: rgba(14, 12, 10, 0.85);
-            backdrop-filter: blur(16px);
-            border-radius: 40px;
-            padding: 2.5rem 2rem;
-            margin: 3rem 0;
-            border: 1px solid rgba(200, 160, 80, 0.1);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-        }
-        .server-panel .section-title {
-            margin-top: 0;
-        }
-        .server-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-        .info-row {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 30px;
-            padding: 0.7rem 1.2rem;
-            border: 1px solid rgba(200, 160, 80, 0.06);
-            gap: 8px;
-        }
-        .info-row .label {
-            font-family: 'Cinzel', serif;
-            font-weight: 600;
-            color: #c9a03d;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-        }
-        .info-row .value {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: #e8e0d4;
-            word-break: break-all;
-        }
-        .copy-btn {
-            background: rgba(200, 160, 80, 0.1);
-            border: none;
-            color: #c9a03d;
-            padding: 2px 14px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-size: 0.6rem;
-            font-weight: 700;
-            transition: all 0.2s;
-            letter-spacing: 0.5px;
-            font-family: 'Cinzel', serif;
-        }
-        .copy-btn:hover {
-            background: #c9a03d;
-            color: #0b0b0e;
-        }
-
-        /* Estado */
-        .status-section {
-            background: rgba(0, 0, 0, 0.35);
-            border-radius: 28px;
-            padding: 1.2rem 1.5rem;
-            margin-top: 1.5rem;
-            border-left: 4px solid #c9a03d;
-        }
-        .status-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 0.8rem;
-        }
-        .status-badge {
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            padding: 0.3rem 1.4rem;
-            border-radius: 40px;
-            font-size: 0.75rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            letter-spacing: 0.5px;
-        }
-        .online {
-            background: #1a3a2a;
-            color: #a8f0a0;
-            border: 1px solid #5fb85a;
-        }
-        .offline {
-            background: #3a1e1e;
-            color: #ffb0a0;
-            border: 1px solid #c96a5a;
-        }
-        .loading {
-            background: #2a2a3a;
-            color: #ccc;
-            border: 1px solid #777;
-        }
-        .refresh-btn {
-            background: transparent;
-            border: 1px solid rgba(200, 160, 80, 0.2);
-            color: #c9a03d;
-            padding: 0.3rem 1rem;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.7rem;
-            transition: all 0.2s;
-            font-family: 'Cinzel', serif;
-        }
-        .refresh-btn:hover {
-            background: rgba(200, 160, 80, 0.1);
-            transform: rotate(10deg);
-        }
-        .status-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 0.6rem 1.2rem;
-            margin-top: 0.5rem;
-        }
-        .status-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.2rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            font-size: 0.85rem;
-        }
-        .status-item .label {
-            color: #8a8272;
-            font-family: 'Cinzel', serif;
-            font-size: 0.7rem;
-            letter-spacing: 0.5px;
-        }
-        .status-item .value {
-            color: #e8e0d4;
-            font-weight: 500;
-        }
-        .last-update {
-            font-size: 0.6rem;
-            color: #6a655a;
-            text-align: right;
-            margin-top: 0.5rem;
-            font-family: 'Cinzel', serif;
-            letter-spacing: 0.5px;
-        }
-
-        /* ===== COMUNIDAD ===== */
-        .community-section {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
-            background: rgba(200, 160, 80, 0.03);
-            border-radius: 40px;
-            padding: 2.5rem 2rem;
-            margin: 2.5rem 0;
-            border: 1px solid rgba(200, 160, 80, 0.06);
-        }
-        .community-text {
-            flex: 1 1 280px;
-            text-align: center;
-        }
-        .community-text h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #e8dcc8;
-            letter-spacing: 1px;
-        }
-        .community-text p {
-            color: #8a8272;
-            margin: 0.5rem 0 1rem;
-            font-size: 0.9rem;
-        }
-        .community-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-        }
-        .btn-discord {
-            background: #5865F2;
-            color: #fff;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            font-family: 'Cinzel', serif;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            letter-spacing: 0.5px;
-        }
-        .btn-discord:hover {
-            background: #4752c4;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(88, 101, 242, 0.25);
-        }
-        .btn-map {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(200, 160, 80, 0.15);
-            color: #c9a03d;
-            padding: 0.8rem 2rem;
-            border-radius: 60px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            font-family: 'Cinzel', serif;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            letter-spacing: 0.5px;
-        }
-        .btn-map:hover {
-            background: rgba(200, 160, 80, 0.08);
-            border-color: #c9a03d;
-            transform: translateY(-2px);
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            text-align: center;
-            padding: 2rem 0 1rem;
-            font-size: 0.7rem;
-            color: #5a554a;
-            border-top: 1px solid rgba(200, 160, 80, 0.05);
-            margin-top: 2rem;
-            letter-spacing: 0.5px;
-            font-family: 'Cinzel', serif;
-        }
-        footer a {
-            color: #8a7a6a;
-            text-decoration: none;
-        }
-        footer a:hover {
-            color: #c9a03d;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-            .hero {
-                padding: 1.5rem 0.5rem;
-            }
-            .server-panel {
-                padding: 1.5rem 1rem;
-            }
-            .community-section {
-                padding: 1.5rem 1rem;
-            }
-            .info-row {
-                flex-wrap: wrap;
-                gap: 4px;
-            }
-            .info-row .value {
-                font-size: 0.75rem;
-            }
-        }
-        @media (max-width: 480px) {
-            .btn-primary {
-                padding: 0.8rem 1.8rem;
-                font-size: 1rem;
-            }
-            .btn-secondary {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.8rem;
-            }
-            .hero-actions {
-                flex-direction: column;
-                align-items: center;
-            }
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-    <div class="container">
+    <a class="skip-link" href="#inicio">Saltar al contenido</a>
+
+    <!-- ===== BARRA SUPERIOR ===== -->
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="#inicio" aria-label="Imperantia — inicio">
+                <img src="title.png" alt="Imperantia" onerror="this.onerror=null; this.src='https://via.placeholder.com/320x60?text=IMPERANTIA'" />
+            </a>
+            <nav class="nav" aria-label="Navegación principal">
+                <a href="#inicio">Inicio</a>
+                <a href="#mundo">El mundo</a>
+                <a href="#server">Servidor</a>
+                <a href="#comunidad">Comunidad</a>
+            </nav>
+            <a href="#server" class="btn btn-secondary topbar-cta">Unirse</a>
+        </div>
+    </header>
+
+    <main class="container">
 
         <!-- ===== HERO ===== -->
-        <header class="hero animate-on-scroll">
+        <section class="hero animate-on-scroll" id="inicio">
             <span class="hero-badge">⚔️ Servidor Bedrock · Guerra &amp; Alianzas</span>
-            <img class="hero-logo" id="serverLogo" src="title.png" alt="World of Nations" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x120?text=World+of+Nations'" />
-            <h1 class="hero-title"></h1>
-            <p class="hero-sub">El Mapa <strong>Velloria</strong> · Construye, Alíate, Conquista</p>
+            <img class="hero-logo" id="serverLogo" src="title.png" alt="Imperantia — Rise, Rule, Conquer" onerror="this.onerror=null; this.src='https://via.placeholder.com/780x220?text=IMPERANTIA'" />
+            <h1 class="hero-title sr-only">Imperantia</h1>
+            <p class="hero-sub">El mundo <strong>New World</strong> · Construye, Alíate, Conquista</p>
             <p class="hero-desc">
-                Sumérgete en un mundo de <strong>guerra, política y creatividad</strong>.
-                Forja tu imperio, forma alianzas estratégicas y domina el vasto territorio de
-                <strong>Velloria</strong>. ¡Tu leyenda comienza ahora!
+                Sumérgete en <strong>New World</strong>, un continente de <strong>guerra, política y creatividad</strong>.
+                Forja tu imperio, forma alianzas estratégicas y domina el vasto territorio de este mundo.
+                ¡Tu leyenda comienza ahora!
             </p>
             <div class="hero-actions">
-                <button id="joinButton" class="btn-primary">▶️ Jugar ahora</button>
-                <a href="#server" class="btn-secondary">📡 Estado del servidor</a>
+                <button id="joinButton" class="btn btn-primary">▶️ Jugar ahora</button>
+                <a href="#server" class="btn btn-secondary">📡 Estado del servidor</a>
             </div>
-        </header>
+
+            <div class="ornament" aria-hidden="true">
+                <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17 2l3.6 8.4L29 14l-8.4 3.6L17 26l-3.6-8.4L5 14l8.4-3.6L17 2z" stroke="currentColor" stroke-width="1.2" fill="rgba(201,162,74,0.15)"/>
+                    <circle cx="17" cy="14" r="2.6" fill="currentColor"/>
+                </svg>
+            </div>
+        </section>
 
         <!-- ===== MAPA DESTACADO ===== -->
-        <div class="map-showcase animate-on-scroll">
-            <img src="mapa.png" alt="Mapa de Velloria" onerror="this.src='https://via.placeholder.com/1000x500?text=Velloria+-+Mapa+del+Servidor'" />
-        </div>
+        <section class="map-showcase animate-on-scroll" aria-label="Mapa de New World">
+            <div class="showcase-frame">
+                <div class="showcase-bar">
+                    <span class="win-dot" aria-hidden="true"></span>
+                    <span class="bar-label">New World · Mapa en vivo</span>
+                    <span class="bar-spacer"></span>
+                    <a href="./map/" target="_blank" rel="noopener" class="btn btn-mini">Abrir mapa completo ↗</a>
+                </div>
+                <iframe class="showcase-map" src="./map/index.html" title="Mapa del mundo New World" loading="lazy"></iframe>
+                <div class="showcase-fallback">
+                    No se pudo cargar el mapa.
+                    <a href="./map/" target="_blank" rel="noopener">Abrir en una pestaña nueva</a>.
+                </div>
+            </div>
+        </section>
 
         <!-- ===== CARACTERÍSTICAS ===== -->
-        <h2 class="section-title animate-on-scroll">Explora <span>Velloria</span></h2>
-        <p class="section-sub animate-on-scroll">Un mundo vivo donde cada decisión cuenta. Domina la guerra, la diplomacia y la construcción.</p>
-        <div class="features-grid">
-            <div class="feature-card animate-on-scroll">
-                <span class="feature-icon">⚔️</span>
-                <h3>Guerras Épicas</h3>
-                <p>Asedios, batallas campales y conquistas territoriales. El poder se gana con sangre y estrategia.</p>
+        <section id="mundo">
+            <div class="section-head animate-on-scroll">
+                <h2 class="section-title">Explora <span>New World</span></h2>
+                <p class="section-sub">Un mundo vivo donde cada decisión cuenta. Domina la guerra, la diplomacia y la construcción.</p>
             </div>
-            <div class="feature-card animate-on-scroll">
-                <span class="feature-icon">🤝</span>
-                <h3>Alianzas &amp; Política</h3>
-                <p>Diplomacia, tratados y traiciones. Las alianzas pueden forjar imperios o destruirlos en un instante.</p>
+
+            <div class="features-grid">
+                <article class="feature-card animate-on-scroll">
+                    <span class="feature-icon">⚔️</span>
+                    <h3>Guerras Épicas</h3>
+                    <p>Asedios, batallas campales y conquistas territoriales. El poder se gana con sangre y estrategia.</p>
+                </article>
+                <article class="feature-card animate-on-scroll">
+                    <span class="feature-icon">🤝</span>
+                    <h3>Alianzas &amp; Política</h3>
+                    <p>Diplomacia, tratados y traiciones. Las alianzas pueden forjar imperios o destruirlos en un instante.</p>
+                </article>
+                <article class="feature-card animate-on-scroll">
+                    <span class="feature-icon">🏰</span>
+                    <h3>Construcciones Colosales</h3>
+                    <p>Desde castillos imponentes hasta ciudades vibrantes. Deja tu huella en el mundo de New World.</p>
+                </article>
+                <article class="feature-card animate-on-scroll">
+                    <span class="feature-icon">🗺️</span>
+                    <h3>Mundo Personalizado</h3>
+                    <p>Biomas, recursos estratégicos y secretos ocultos. Cada rincón de New World guarda una historia.</p>
+                </article>
             </div>
-            <div class="feature-card animate-on-scroll">
-                <span class="feature-icon">🏰</span>
-                <h3>Construcciones Colosales</h3>
-                <p>Desde castillos imponentes hasta ciudades vibrantes. Deja tu huella en el mundo de Velloria.</p>
-            </div>
-            <div class="feature-card animate-on-scroll">
-                <span class="feature-icon">🗺️</span>
-                <h3>Mundo Personalizado</h3>
-                <p>Biomas , recursos estratégicos y secretos ocultos. Cada rincón de Velloria guarda una historia.</p>
-            </div>
-        </div>
+        </section>
 
         <!-- ===== PANEL DEL SERVIDOR ===== -->
         <section class="server-panel animate-on-scroll" id="server">
-            <h2 class="section-title" style="margin-top:0;">📡 <span>Conecta al Servidor</span></h2>
+            <div class="section-head">
+                <h2 class="section-title plain">📡 <span>Conecta al Servidor</span></h2>
+            </div>
+
             <div class="server-details">
                 <div class="info-row">
                     <span class="label">📛 Nombre</span>
-                    <span class="value" id="server-name-display">WorldOfNations</span>
+                    <span class="value" id="server-name-display">Imperantia</span>
                     <button class="copy-btn" onclick="copyToClipboard('server-name')">Copiar</button>
                 </div>
                 <div class="info-row">
@@ -700,7 +145,7 @@
                         <span class="label">🎮 Versión</span>
                         <span class="value" id="versionValue">Cargando...</span>
                     </div>
-                    <div class="status-item" style="grid-column: 1 / -1;">
+                    <div class="status-item span-all">
                         <span class="label">📝 MOTD</span>
                         <span class="value" id="motdValue">---</span>
                     </div>
@@ -708,226 +153,41 @@
                 <div class="last-update" id="lastUpdateTime">--</div>
             </div>
 
-            <div style="text-align:center; margin-top: 2rem;">
-                <button id="joinButton2" class="btn-primary" style="font-size:1.1rem;">▶️ Unirse al servidor</button>
-                <div id="fallbackMessage" style="display: none; background: #331c1c; border-radius: 20px; padding: 10px; margin-top: 12px; font-size:0.85rem; color:#d4a0a0;">
+            <div class="join-block">
+                <button id="joinButton2" class="btn btn-primary">▶️ Unirse al servidor</button>
+                <div id="fallbackMessage" class="fallback-msg">
                     ⚠️ No se pudo abrir Minecraft automáticamente. Asegúrate de tener Minecraft Bedrock instalado.
                 </div>
-                <p style="margin-top:0.8rem; font-size:0.7rem; color:#6a655a; font-family:'Cinzel',serif;">
+                <p class="join-hint">
                     💡 Si el botón no funciona, añade el servidor manualmente con los datos de arriba.
                 </p>
             </div>
         </section>
 
         <!-- ===== COMUNIDAD ===== -->
-        <div class="community-section animate-on-scroll">
+        <section class="community-section animate-on-scroll" id="comunidad">
             <div class="community-text">
                 <h3>🌟 Únete a la comunidad</h3>
                 <p>Conoce a otros jugadores, participa en eventos y mantente al día de las guerras y alianzas.</p>
             </div>
             <div class="community-actions">
-                <a id="discordLink" href="https://discord.gg/yGJuZkrqmU" target="_blank" class="btn-discord">
+                <a id="discordLink" href="https://discord.gg/yGJuZkrqmU" target="_blank" rel="noopener" class="btn btn-discord">
                     💬 Discord oficial
                 </a>
-                <a id="mapButton" href="./mapa/" target="_blank" class="btn-map">
+                <a id="mapButton" href="./map/" target="_blank" rel="noopener" class="btn btn-map">
                     🗺️ Mapa mundial
                 </a>
             </div>
-        </div>
+        </section>
 
         <!-- ===== FOOTER ===== -->
         <footer>
-            ⚔️ <strong>World of Nations</strong> · Un servidor de guerra, política y creatividad en Velloria · Juega ahora en Minecraft Bedrock
-            <br />
-            <span style="opacity:0.5;">&copy; 2026 · Hecho con ❤️ por la comunidad de Velloria</span>
+            ⚔️ <strong>Imperantia</strong> · Un servidor de guerra, política y creatividad en New World · Juega ahora en Minecraft Bedrock
+            <span class="footer-fine">&copy; 2026 · Hecho con ❤️ por la comunidad de New World</span>
         </footer>
 
-    </div>
+    </main>
 
-    <script>
-        // ============================================================
-        // CONFIGURACIÓN
-        // ============================================================
-        const SERVER_CONFIG = {
-            name: "WorldOfNations",
-            ip: "147.185.221.26",
-            port: "14854"
-        };
-        const DISCORD_INVITE = "https://discord.gg/yGJuZkrqmU";
-        const MAP_URL = "./mapa/index.html";
-        const LOGO_URL = "title.png";
-
-        // ============================================================
-        // DOM REFS
-        // ============================================================
-        const statusBadge = document.getElementById('statusBadge');
-        const playersValue = document.getElementById('playersValue');
-        const versionValue = document.getElementById('versionValue');
-        const motdValue = document.getElementById('motdValue');
-        const lastUpdateTimeSpan = document.getElementById('lastUpdateTime');
-
-        document.getElementById('server-name-display').innerText = SERVER_CONFIG.name;
-        document.getElementById('server-ip-display').innerText = SERVER_CONFIG.ip;
-        document.getElementById('server-port-display').innerText = SERVER_CONFIG.port;
-        document.getElementById('discordLink').href = DISCORD_INVITE;
-        document.getElementById('mapButton').href = MAP_URL;
-        document.getElementById('serverLogo').src = LOGO_URL;
-
-        // ============================================================
-        // FUNCIONES
-        // ============================================================
-        window.copyToClipboard = function(type) {
-            let text = '';
-            switch (type) {
-                case 'server-name':
-                    text = SERVER_CONFIG.name;
-                    break;
-                case 'server-ip':
-                    text = SERVER_CONFIG.ip;
-                    break;
-                case 'server-port':
-                    text = SERVER_CONFIG.port;
-                    break;
-                default:
-                    return;
-            }
-            navigator.clipboard.writeText(text).then(() => {
-                const btn = event.target;
-                const original = btn.innerText;
-                btn.innerText = '✓ Copiado';
-                setTimeout(() => { btn.innerText = original; }, 1500);
-            }).catch(() => {});
-        };
-
-        function formatTime(timestampMs) {
-            if (!timestampMs) return 'Desconocido';
-            return new Date(timestampMs).toLocaleTimeString() + ' · ' + new Date(timestampMs).toLocaleDateString();
-        }
-
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            }).replace(/\n/g, '<br>');
-        }
-
-        async function fetchServerStatus() {
-            const apiUrl =
-                `https://api.mcstatus.io/v2/status/bedrock/${SERVER_CONFIG.ip}:${SERVER_CONFIG.port}`;
-            statusBadge.className = 'status-badge loading';
-            statusBadge.innerHTML = '⏳ Consultando...';
-            playersValue.innerText = '---';
-            versionValue.innerText = 'Cargando...';
-            motdValue.innerHTML = 'Obteniendo información...';
-            lastUpdateTimeSpan.innerText = 'Actualizando...';
-
-            try {
-                const response = await fetch(apiUrl);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                const data = await response.json();
-
-                if (data.online === true) {
-                    statusBadge.className = 'status-badge online';
-                    statusBadge.innerHTML = '🟢 ONLINE';
-                    playersValue.innerText = `${data.players?.online ?? 0} / ${data.players?.max ?? 0}`;
-                    versionValue.innerText = `${data.version?.name ?? 'Desconocida'} (protocolo ${data.version?.protocol ?? '?'})`;
-                    let cleanMotd = data.motd?.clean ?? 'Bienvenido a World of Nations';
-                    motdValue.innerHTML = escapeHtml(cleanMotd);
-                    lastUpdateTimeSpan.innerText = data.retrieved_at ? `Última actualización: ${formatTime(data.retrieved_at)}` :
-                        'Actualizado ahora';
-                } else {
-                    statusBadge.className = 'status-badge offline';
-                    statusBadge.innerHTML = '🔴 OFFLINE';
-                    playersValue.innerText = 'Servidor caído';
-                    versionValue.innerText = 'No disponible';
-                    motdValue.innerHTML = 'El servidor está en mantenimiento o apagado. Vuelve pronto.';
-                    lastUpdateTimeSpan.innerText = data.retrieved_at ? `Último intento: ${formatTime(data.retrieved_at)}` :
-                        'Sin conexión.';
-                }
-            } catch (error) {
-                console.error(error);
-                statusBadge.className = 'status-badge offline';
-                statusBadge.innerHTML = '⚠️ ERROR';
-                playersValue.innerText = 'Error de red';
-                versionValue.innerText = 'No disponible';
-                motdValue.innerHTML = 'No se pudo contactar con el estado del servidor.';
-                lastUpdateTimeSpan.innerText = 'Reintentando...';
-            }
-        }
-
-        let refreshInterval;
-
-        function startAutoRefresh() {
-            if (refreshInterval) clearInterval(refreshInterval);
-            refreshInterval = setInterval(fetchServerStatus, 60000);
-        }
-
-        // ============================================================
-        // DEEP LINK MINECRAFT
-        // ============================================================
-        function buildMinecraftDeeplink() {
-            const encodedName = encodeURIComponent(SERVER_CONFIG.name);
-            return `minecraft://?addExternalServer=${encodedName}|${SERVER_CONFIG.ip}:${SERVER_CONFIG.port}`;
-        }
-
-        function isIOS() {
-            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        }
-
-        function openMinecraft() {
-            const deepLink = buildMinecraftDeeplink();
-            const fallback = document.getElementById('fallbackMessage');
-            if (isIOS()) {
-                window.location.href = deepLink;
-                setTimeout(() => fallback.style.display = 'block', 2000);
-            } else {
-                try {
-                    window.location.assign(deepLink);
-                    const t = setTimeout(() => fallback.style.display = 'block', 2000);
-                    window.addEventListener('blur', () => {
-                        clearTimeout(t);
-                        fallback.style.display = 'none';
-                    }, { once: true });
-                } catch (e) {
-                    fallback.style.display = 'block';
-                }
-            }
-        }
-
-        // ============================================================
-        // ANIMACIONES SCROLL
-        // ============================================================
-        const animated = document.querySelectorAll('.animate-on-scroll');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    e.target.classList.add('visible');
-                    observer.unobserve(e.target);
-                }
-            });
-        }, { threshold: 0.2 });
-        animated.forEach(el => observer.observe(el));
-
-        // ============================================================
-        // INICIO
-        // ============================================================
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchServerStatus();
-            startAutoRefresh();
-            document.getElementById('manualRefreshBtn').addEventListener('click', fetchServerStatus);
-            document.getElementById('joinButton').addEventListener('click', openMinecraft);
-            document.getElementById('joinButton2').addEventListener('click', openMinecraft);
-
-            animated.forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight - 100) {
-                    el.classList.add('visible');
-                }
-            });
-        });
-    </script>
-
+    <script src="js/main.js"></script>
 </body>
 </html>
