@@ -28,7 +28,7 @@
                 <a href="#server">Servidor</a>
                 <a href="#comunidad">Comunidad</a>
             </nav>
-            <a href="#server" class="btn btn-secondary topbar-cta">Unirse</a>
+            <a href="jugar.html" class="btn btn-secondary topbar-cta">Unirse</a>
         </div>
     </header>
 
@@ -46,7 +46,7 @@
                 ¡Tu leyenda comienza ahora!
             </p>
             <div class="hero-actions">
-                <button id="joinButton" class="btn btn-primary">▶️ Jugar ahora</button>
+                <a href="jugar.html" id="joinButton" class="btn btn-primary">▶️ Jugar ahora</a>
                 <a href="#server" class="btn btn-secondary">📡 Estado del servidor</a>
             </div>
 
@@ -116,17 +116,17 @@
                 <div class="info-row">
                     <span class="label">📛 Nombre</span>
                     <span class="value" id="server-name-display">Imperantia</span>
-                    <button class="copy-btn" onclick="copyToClipboard('server-name')">Copiar</button>
+                    <button class="copy-btn" onclick="copyToClipboard('server-name', this)">Copiar</button>
                 </div>
                 <div class="info-row">
                     <span class="label">🌐 IP</span>
-                    <span class="value" id="server-ip-display">147.185.221.26</span>
-                    <button class="copy-btn" onclick="copyToClipboard('server-ip')">Copiar</button>
+                    <span class="value" id="server-ip-display">147.185.221.214</span>
+                    <button class="copy-btn" onclick="copyToClipboard('server-ip', this)">Copiar</button>
                 </div>
                 <div class="info-row">
                     <span class="label">🔌 Puerto</span>
-                    <span class="value" id="server-port-display">14854</span>
-                    <button class="copy-btn" onclick="copyToClipboard('server-port')">Copiar</button>
+                    <span class="value" id="server-port-display">49637</span>
+                    <button class="copy-btn" onclick="copyToClipboard('server-port', this)">Copiar</button>
                 </div>
             </div>
 
@@ -154,7 +154,7 @@
             </div>
 
             <div class="join-block">
-                <button id="joinButton2" class="btn btn-primary">▶️ Unirse al servidor</button>
+                <a href="jugar.html" id="joinButton2" class="btn btn-primary">▶️ Unirse al servidor</a>
                 <div id="fallbackMessage" class="fallback-msg">
                     ⚠️ No se pudo abrir Minecraft automáticamente. Asegúrate de tener Minecraft Bedrock instalado.
                 </div>
@@ -183,11 +183,12 @@
         <!-- ===== FOOTER ===== -->
         <footer>
             ⚔️ <strong>Imperantia</strong> · Un servidor de guerra, política y creatividad en New World · Juega ahora en Minecraft Bedrock
-            <span class="footer-fine">&copy; 2026 · Hecho con ❤️ por la comunidad de New World</span>
+            <span class="footer-fine">&copy; 2026 · Hecho con ❤️ por Ranasterty</span>
         </footer>
 
     </main>
 
+    <script src="js/config.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

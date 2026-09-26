@@ -1,16 +1,8 @@
 // ============================================================
 // IMPERANTIA — Funciones de la página principal
 // ============================================================
-
-// ===== CONFIGURACIÓN =====
-const SERVER_CONFIG = {
-    name: "Imperantia",
-    ip: "147.185.221.26",
-    port: "14854"
-};
-const DISCORD_INVITE = "https://discord.gg/yGJuZkrqmU";
-const MAP_URL = "./map/index.html";
-const LOGO_URL = "title.png";
+// La configuración compartida (SERVER_CONFIG, deeplink, copiado)
+// vive en js/config.js
 
 // ===== REFS DEL DOM =====
 const statusBadge = document.getElementById('statusBadge');
@@ -27,29 +19,6 @@ document.getElementById('mapButton').href = MAP_URL;
 document.getElementById('serverLogo').src = LOGO_URL;
 
 // ===== FUNCIONES =====
-window.copyToClipboard = function (type) {
-    let text = '';
-    switch (type) {
-        case 'server-name':
-            text = SERVER_CONFIG.name;
-            break;
-        case 'server-ip':
-            text = SERVER_CONFIG.ip;
-            break;
-        case 'server-port':
-            text = SERVER_CONFIG.port;
-            break;
-        default:
-            return;
-    }
-    navigator.clipboard.writeText(text).then(() => {
-        const btn = event.target;
-        const original = btn.innerText;
-        btn.innerText = '✓ Copiado';
-        setTimeout(() => { btn.innerText = original; }, 1500);
-    }).catch(() => { });
-};
-
 function formatTime(timestampMs) {
     if (!timestampMs) return 'Desconocido';
     return new Date(timestampMs).toLocaleTimeString() + ' · ' + new Date(timestampMs).toLocaleDateString();
@@ -116,36 +85,6 @@ function startAutoRefresh() {
     refreshInterval = setInterval(fetchServerStatus, 60000);
 }
 
-// ===== ENLACE PROFUNDO DE MINECRAFT =====
-function buildMinecraftDeeplink() {
-    const encodedName = encodeURIComponent(SERVER_CONFIG.name);
-    return `minecraft://?addExternalServer=${encodedName}|${SERVER_CONFIG.ip}:${SERVER_CONFIG.port}`;
-}
-
-function isIOS() {
-    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-}
-
-function openMinecraft() {
-    const deepLink = buildMinecraftDeeplink();
-    const fallback = document.getElementById('fallbackMessage');
-    if (isIOS()) {
-        window.location.href = deepLink;
-        setTimeout(() => fallback.style.display = 'block', 2000);
-    } else {
-        try {
-            window.location.assign(deepLink);
-            const t = setTimeout(() => fallback.style.display = 'block', 2000);
-            window.addEventListener('blur', () => {
-                clearTimeout(t);
-                fallback.style.display = 'none';
-            }, { once: true });
-        } catch (e) {
-            fallback.style.display = 'block';
-        }
-    }
-}
-
 // ===== ANIMACIONES AL HACER SCROLL =====
 const animated = document.querySelectorAll('.animate-on-scroll');
 const observer = new IntersectionObserver((entries) => {
@@ -163,8 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchServerStatus();
     startAutoRefresh();
     document.getElementById('manualRefreshBtn').addEventListener('click', fetchServerStatus);
-    document.getElementById('joinButton').addEventListener('click', openMinecraft);
-    document.getElementById('joinButton2').addEventListener('click', openMinecraft);
 
     animated.forEach(el => {
         if (el.getBoundingClientRect().top < window.innerHeight - 100) {

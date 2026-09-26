@@ -1055,6 +1055,175 @@ footer .footer-fine {
     }
 }
 
+/* ===== PÁGINA DE UNIÓN (jugar.html) ===== */
+.join-container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding-top: 7.5rem;
+}
+
+.join-card {
+    position: relative;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 3rem clamp(1.2rem, 4vw, 3rem) 2.4rem;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+.join-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(600px 240px at 50% -10%, rgba(201, 162, 74, 0.16), transparent 70%);
+    pointer-events: none;
+}
+
+.join-logo {
+    position: relative;
+    display: block;
+    width: min(400px, 82%);
+    margin: 0 auto 1.2rem;
+}
+
+.join-title {
+    position: relative;
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--parchment);
+    letter-spacing: 2px;
+}
+.join-title span {
+    background: linear-gradient(180deg, var(--brass-lite), var(--brass));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.join-sub {
+    position: relative;
+    max-width: 46ch;
+    margin: 0.9rem auto 1.7rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.launch-status {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 1.3rem;
+    border-radius: 40px;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+}
+.launch-status .launch-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 10px currentColor;
+}
+.launch-status.working {
+    background: rgba(201, 162, 74, 0.12);
+    border: 1px solid rgba(201, 162, 74, 0.45);
+    color: var(--brass-lite);
+}
+.launch-status.working .launch-dot {
+    animation: pulseDot 1.4s ease-in-out infinite;
+}
+.launch-status.ok {
+    background: rgba(79, 156, 88, 0.14);
+    border: 1px solid rgba(79, 156, 88, 0.55);
+    color: #9fd9a6;
+}
+.launch-status.fail {
+    background: rgba(150, 52, 45, 0.2);
+    border: 1px solid rgba(180, 86, 74, 0.5);
+    color: #ffb3a6;
+}
+
+.join-card .fallback-msg {
+    position: relative;
+    max-width: 52ch;
+    margin: 0 auto 1.1rem;
+    text-align: left;
+}
+
+.join-card .join-block {
+    position: relative;
+    margin-top: 0.4rem;
+}
+
+.join-details {
+    position: relative;
+    text-align: left;
+    margin: 2.2rem 0 0;
+}
+@media (min-width: 720px) {
+    .join-details {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.manual-hint {
+    position: relative;
+    text-align: center;
+    max-width: 52ch;
+    margin: 1.1rem auto 0;
+}
+.manual-hint em {
+    color: var(--parchment-dim);
+    font-style: normal;
+    font-weight: 600;
+}
+
+.join-footer {
+    margin-top: 2.4rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--line-soft);
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: var(--font-body);
+}
+.join-footer .footer-fine {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.7rem;
+    color: #6b6559;
+}
+.join-footer a {
+    color: var(--brass-lite);
+    text-decoration: none;
+}
+.join-footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 560px) {
+    .join-container {
+        padding-top: 6rem;
+    }
+.join-page .topbar-cta {
+    margin-left: auto;
+}
+
+.join-card {
+        padding-top: 2.2rem;
+    }
+    .launch-status {
+        font-size: 0.7rem;
+        padding: 0.5rem 1rem;
+    }
+}
+
 /* ===== MOVIMIENTO REDUCIDO ===== */
 @media (prefers-reduced-motion: reduce) {
     html {

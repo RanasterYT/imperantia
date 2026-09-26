@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="description" content="Únete a Imperantia en Minecraft Bedrock — abre el juego y añade el servidor automáticamente." />
+    <meta name="theme-color" content="#0b0a08" />
+    <title>Únete · Imperantia — Minecraft Bedrock</title>
+    <link rel="icon" href="title.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="join-page">
+
+    <a class="skip-link" href="#join-main">Saltar al contenido</a>
+
+    <!-- ===== BARRA SUPERIOR ===== -->
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" href="index.html" aria-label="Imperantia — inicio">
+                <img src="title.png" alt="Imperantia" onerror="this.onerror=null; this.src='https://via.placeholder.com/320x60?text=IMPERANTIA'" />
+            </a>
+            <a href="index.html" class="btn btn-secondary topbar-cta">← Volver</a>
+        </div>
+    </header>
+
+    <main class="container join-container" id="join-main">
+
+        <section class="join-card">
+            <img class="hero-logo join-logo" id="serverLogo" src="title.png" alt="Imperantia — Rise, Rule, Conquer" onerror="this.onerror=null; this.src='https://via.placeholder.com/780x220?text=IMPERANTIA'" />
+            <h1 class="join-title">Únete a <span>Imperantia</span></h1>
+            <p class="join-sub">Al entrar en esta página intentamos abrir <strong>Minecraft Bedrock</strong> y añadir el servidor por ti.</p>
+
+            <!-- Estado del lanzamiento -->
+            <div class="launch-status working" id="launchStatus" role="status" aria-live="polite">
+                <span class="launch-dot" aria-hidden="true"></span>
+                <span id="launchText">Abriendo Minecraft…</span>
+            </div>
+
+            <div id="fallbackMessage" class="fallback-msg">
+                ⚠️ Tu navegador pide un toque para abrir aplicaciones externas. Pulsa <strong>«Abrir Minecraft ahora»</strong> y acepta la invitación del servidor.
+            </div>
+
+            <div class="join-block">
+                <button id="launchBtn" class="btn btn-primary">▶️ Abrir Minecraft ahora</button>
+                <p class="join-hint">
+                    💡 Se abrirá la invitación para añadir <strong>Imperantia</strong> a tu lista de servidores.
+                </p>
+            </div>
+
+            <!-- Datos del servidor para añadirlo a mano -->
+            <div class="server-details join-details">
+                <div class="info-row">
+                    <span class="label">📛 Nombre</span>
+                    <span class="value" id="server-name-display">Imperantia</span>
+                    <button class="copy-btn" onclick="copyToClipboard('server-name', this)">Copiar</button>
+                </div>
+                <div class="info-row">
+                    <span class="label">🌐 IP</span>
+                    <span class="value" id="server-ip-display">147.185.221.214</span>
+                    <button class="copy-btn" onclick="copyToClipboard('server-ip', this)">Copiar</button>
+                </div>
+                <div class="info-row">
+                    <span class="label">🔌 Puerto</span>
+                    <span class="value" id="server-port-display">49637</span>
+                    <button class="copy-btn" onclick="copyToClipboard('server-port', this)">Copiar</button>
+                </div>
+            </div>
+
+            <p class="join-hint manual-hint">
+                📋 En Minecraft: <em>Jugadores → Servidores → Añadir servidor</em> y pega los datos de arriba.
+            </p>
+        </section>
+
+        <footer class="join-footer">
+            ⚔️ <strong>Imperantia</strong> · Un servidor de guerra, política y creatividad en New World
+            <span class="footer-fine"><a href="index.html">Volver al inicio</a></span>
+        </footer>
+
+    </main>
+
+    <script src="js/config.js"></script>
+    <script src="js/jugar.js"></script>
+</body>
+</html>
