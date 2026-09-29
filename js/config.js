@@ -5,7 +5,7 @@
 const SERVER_CONFIG = {
     name: "Imperantia",
     ip: "147.185.221.214",
-    port: "49637"
+    port: "49669"
 };
 const DISCORD_INVITE = "https://discord.gg/yGJuZkrqmU";
 const MAP_URL = "./map/index.html";
